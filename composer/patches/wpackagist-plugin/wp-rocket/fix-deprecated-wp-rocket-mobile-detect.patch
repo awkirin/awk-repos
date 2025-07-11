@@ -1,0 +1,11 @@
+--- a/inc/classes/dependencies/mobiledetect/mobiledetectlib/Mobile_Detect.php
++++ b/inc/classes/dependencies/mobiledetect/mobiledetectlib/Mobile_Detect.php
+@@ -885,7 +885,7 @@ class Mobile_Detect
+      * @param string $userAgent Inject the User-Agent header. If null, will use HTTP_USER_AGENT
+      *                          from the $headers array instead.
+      */
+     public function __construct(
+-        array $headers = null,
++        ?array $headers = null,
+         $userAgent = null
+     ) {

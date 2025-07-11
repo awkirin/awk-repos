@@ -1,0 +1,11 @@
+--- a/inc/classes/Buffer/class-cache.php
++++ b/inc/classes/Buffer/class-cache.php
+@@ -458,7 +458,7 @@
+ 			$footprint .= ' - Debug: cached@' . $time;
+ 		}
+ 		$footprint .= ' -->';
+-		return $footprint;
++		return '';
+ 	}
+
+ 	/**

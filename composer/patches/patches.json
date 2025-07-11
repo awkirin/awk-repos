@@ -1,0 +1,12 @@
+{
+  "patches": {
+    "wpackagist-plugin/wp-rocket": {
+      "fix undefined array key svg": "https://raw.githubusercontent.com/awkirin/awk-repos/refs/heads/main/composer/patches/wpackagist-plugin/wp-rocket/fix-undefined-array-key-svg.patch",
+      "remove footprint": "https://raw.githubusercontent.com/awkirin/awk-repos/refs/heads/main/composer/patches/wpackagist-plugin/wp-rocket/remove-footprint.patch",
+      "fix-deprecated-wp-rocket-mobile-detect": "https://raw.githubusercontent.com/awkirin/awk-repos/refs/heads/main/composer/patches/wpackagist-plugin/wp-rocket/fix-deprecated-wp-rocket-mobile-detect.patch"
+    },
+    "lukasbesch/bedrock-plugin-disabler": {
+      "fix-deprecated-message": "https://raw.githubusercontent.com/awkirin/awk-repos/refs/heads/main/composer/patches/lukasbesch/bedrock-plugin-disabler/fix-deprecated-message.patch"
+    }
+  }
+}
