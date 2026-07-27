@@ -1,9 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
+
+
+# [*] проработано
 function awk_config_updates() {
   sudo apt update
   sudo apt install -y unattended-upgrades
+  sudo rm -f -- /etc/apt/apt.conf.d/[0-9]*-awkirin-unattended-upgrades
   sudo tee /etc/apt/apt.conf.d/99-awkirin-unattended-upgrades > /dev/null <<'EOF'
 # --- Обновления и очистка ---
 
@@ -61,6 +65,7 @@ function awk_config_ufw() {
 function awk_config_ssh() {
   sudo apt update
   sudo apt install -y openssh-server
+  sudo rm -f -- /etc/apt/apt.conf.d/[0-9]*-awkirin-security.conf
   sudo tee /etc/ssh/sshd_config.d/1000-awkirin-security.conf > /dev/null <<EOF
 # --- Базовые настройки ---
 # Вход только по ключам, без пароля
@@ -100,6 +105,7 @@ EOF
 function awk_config_fail2ban() {
   sudo apt update
   sudo apt install -y fail2ban
+  sudo rm -f -- /etc/apt/apt.conf.d/[0-9]*-awkirin.conf
   sudo tee /etc/fail2ban/jail.d/1000-awkirin.conf > /dev/null <<EOF
 [sshd]
 enabled   = true
@@ -110,11 +116,14 @@ bantime   = 60m
 logpath   = %(sshd_log)s
 EOF
 
+sudo fail2ban-client -t
+sudo systemctl enable --now fail2ban
+sudo fail2ban-client status sshd
 sudo systemctl restart fail2ban
 }
 
+awk_config_user "$@"
 awk_config_ssh
 awk_config_fail2ban
 awk_config_updates
 awk_config_ufw
-
