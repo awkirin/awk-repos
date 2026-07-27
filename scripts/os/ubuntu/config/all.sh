@@ -7,37 +7,37 @@ function awk_config_updates() {
   sudo tee /etc/apt/apt.conf.d/99-awkirin-unattended-upgrades > /dev/null <<'EOF'
 # --- Обновления и очистка ---
 
-# Интервал обновления списков пакетов, дней
+# Интервал обновления списков пакетов (дни)
 APT::Periodic::Update-Package-Lists "1";
 
-# Интервал запуска unattended-upgrades, дней
+# Интервал запуска unattended-upgrades (дни)
 APT::Periodic::Unattended-Upgrade "1";
 
-# Интервал очистки кэша APT, дней
-APT::Periodic::AutocleanInterval "7";
+# Интервал очистки кэша APT (дни)
+APT::Periodic::AutocleanInterval "1";
 
-# Удаление неиспользуемых пакетов ядер, true/false
+# Удалять неиспользуемые пакеты ядер (true/false)
 Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
 
-# Удаление новых неиспользуемых зависимостей, true/false
+# Удалять новые неиспользуемые зависимости (true/false)
 Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
 
 # --- Автоперезагрузка ---
 
-# Автоперезагрузка при необходимости, true/false
+# Перезагружать при необходимости (true/false)
 Unattended-Upgrade::Automatic-Reboot "true";
 
-# Автоперезагрузка при активных пользовательских сессиях, true/false
+# Перезагружать при активных пользовательских сессиях (true/false)
 Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
 
-# Время автоперезагрузки, HH:MM
+# Время автоперезагрузки (HH:MM)
 Unattended-Upgrade::Automatic-Reboot-Time "04:00";
 EOF
 
   # Системные таймеры APT
   sudo systemctl enable --now apt-daily.timer apt-daily-upgrade.timer
 
-  # Валидация конфигурации
+  # Тестовый запуск без установки обновлений
   sudo unattended-upgrade --dry-run --debug
 }
 
@@ -62,7 +62,7 @@ function awk_config_ssh() {
   sudo apt update
   sudo apt install -y openssh-server
   sudo tee /etc/ssh/sshd_config.d/1000-awkirin-security.conf > /dev/null <<EOF
-# ========== Базовые настройки ==========
+# --- Базовые настройки ---
 # Вход только по ключам, без пароля
 #PasswordAuthentication no
 #PermitRootLogin no
@@ -70,7 +70,7 @@ function awk_config_ssh() {
 # PAM оставляем включённым для совместимости с системой
 UsePAM yes
 
-# ========== Дополнительная безопасность ==========
+# --- Дополнительная безопасность ---
 PermitEmptyPasswords no          # запрет пустых паролей
 MaxAuthTries 3                   # максимум попыток логина
 IgnoreRhosts yes                 # игнорирование .rhosts
@@ -78,12 +78,12 @@ IgnoreRhosts yes                 # игнорирование .rhosts
 UseDNS no                        # ускоряет логин, не проверяя DNS
 PermitUserEnvironment no         # отключаем переменные окружения
 
-# ========== Ограничение форвардинга ==========
+# --- Ограничение форвардинга ---
 #X11Forwarding no
 #AllowTcpForwarding no
 #AllowAgentForwarding no
 
-# ========== Логирование ==========
+# --- Логирование ---
 # LogLevel VERBOSE
 EOF
 
@@ -117,5 +117,4 @@ awk_config_ssh
 awk_config_fail2ban
 awk_config_updates
 awk_config_ufw
-
 
