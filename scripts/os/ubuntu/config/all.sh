@@ -117,12 +117,11 @@ logpath   = %(sshd_log)s
 EOF
 
 sudo fail2ban-client -t
-sudo systemctl enable --now fail2ban
-sudo fail2ban-client status sshd
+sudo systemctl enable fail2ban
 sudo systemctl restart fail2ban
+sudo fail2ban-client status sshd
 }
 
-awk_config_user "$@"
 awk_config_ssh
 awk_config_fail2ban
 awk_config_updates
