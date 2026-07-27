@@ -7,6 +7,25 @@ function awk_config_time() {
   sudo timedatectl set-ntp true
   timedatectl status
 }
+
+function awk_config_journald() {
+  sudo install -d -m 755 /etc/systemd/journald.conf.d
+  sudo rm -f -- /etc/systemd/journald.conf.d/[0-9]*-awkirin.conf
+  sudo tee /etc/systemd/journald.conf.d/99-awkirin.conf > /dev/null <<'EOF'
+[Journal]
+Storage=persistent
+Compress=yes
+SystemMaxUse=100M
+SystemKeepFree=500M
+MaxRetentionSec=7day
+EOF
+
+  sudo systemctl restart systemd-journald
+  sudo journalctl --rotate
+  sudo journalctl --vacuum-size=100M --vacuum-time=7day
+  sudo journalctl --disk-usage
+}
+
 # [*] проработано
 function awk_config_updates() {
   sudo apt update
@@ -20,6 +39,8 @@ APT::Periodic::Update-Package-Lists "1";
 
 # Интервал запуска unattended-upgrades (дни)
 APT::Periodic::Unattended-Upgrade "1";
+
+APT::Periodic::CleanInterval "1";
 
 # Интервал очистки кэша APT (дни)
 APT::Periodic::AutocleanInterval "1";
@@ -61,8 +82,9 @@ function awk_config_ufw() {
   # sudo ufw allow 8080
 
   sudo ufw --force enable
+  sudo ufw logging low
 
-  sudo ufw status
+  sudo ufw status verbose
   # sudo ufw show added
 
 }
@@ -128,6 +150,7 @@ sudo fail2ban-client status sshd
 }
 
 awk_config_time
+awk_config_journald
 awk_config_ssh
 awk_config_fail2ban
 awk_config_updates
