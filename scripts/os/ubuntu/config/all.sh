@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-
-
 function awk-config-updates() {
   sudo apt update
   sudo apt install -y unattended-upgrades
@@ -17,7 +15,7 @@ APT::Periodic::Unattended-Upgrade "1";
 # Раз в 7 дней удалять устаревшие пакеты из кэша APT
 APT::Periodic::AutocleanInterval "7";
 
-# Автоматически перезагружать сервер, если требуется после обновлений
+# Автоматическая перезагружзка сервера, если требуется после обновлений
 Unattended-Upgrade::Automatic-Reboot "true";
 
 # Перезагружать даже при наличии активных пользовательских сессий
@@ -38,9 +36,11 @@ EOF
 
   # Проверить корректность конфигурации
   sudo unattended-upgrade --dry-run --debug
-}; awk-config-updates;
+}
 
 function awk-config-ufw() {
+  sudo apt update
+  sudo apt install -y ufw
   sudo ufw default deny incoming
   sudo ufw default allow outgoing
 
@@ -53,14 +53,16 @@ function awk-config-ufw() {
 
   sudo ufw status
   # sudo ufw show added
-}; awk-config-ufw;
+}
 
 function awk-config-ssh() {
+  sudo apt update
+  sudo apt install -y openssh-server
   sudo tee /etc/ssh/sshd_config.d/1000-awkirin-security.conf > /dev/null <<EOF
 # ========== Базовые настройки ==========
 # Вход только по ключам, без пароля
-PasswordAuthentication no
-PermitRootLogin no
+#PasswordAuthentication no
+#PermitRootLogin no
 
 # PAM оставляем включённым для совместимости с системой
 UsePAM yes
@@ -74,9 +76,9 @@ UseDNS no                        # ускоряет логин, не прове�
 PermitUserEnvironment no         # отключаем переменные окружения
 
 # ========== Ограничение форвардинга ==========
-X11Forwarding no
-AllowTcpForwarding no
-# AllowAgentForwarding no
+#X11Forwarding no
+#AllowTcpForwarding no
+#AllowAgentForwarding no
 
 # ========== Логирование ==========
 # LogLevel VERBOSE
@@ -90,9 +92,11 @@ EOF
 
   # Применяем конфигурацию без разрыва текущих подключений
   sudo systemctl reload ssh
-}; awk-config-ssh;
+}
 
 function awk-config-fail2ban() {
+  sudo apt update
+  sudo apt install -y fail2ban
   sudo tee /etc/fail2ban/jail.d/1000-awkirin.conf > /dev/null <<EOF
 [sshd]
 enabled   = true
@@ -104,4 +108,13 @@ logpath   = %(sshd_log)s
 EOF
 
 sudo systemctl restart fail2ban
-}; awk-config-fail2ban;
+}
+
+awk-config-ssh
+awk-config-fail2ban
+awk-config-updates
+awk-config-ufw
+
+
+
+
