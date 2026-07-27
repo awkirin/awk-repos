@@ -1,10 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-function awk-config-updates() {
+function awk_config_updates() {
   sudo apt update
   sudo apt install -y unattended-upgrades
-  sudo tee /etc/apt/apt.conf.d/1000-awkirin-unattended-upgrades > /dev/null <<'EOF'
+  sudo tee /etc/apt/apt.conf.d/00-awkirin-unattended-upgrades > /dev/null <<'EOF'
 
 # Ежедневно обновлять список пакетов
 APT::Periodic::Update-Package-Lists "1";
@@ -38,7 +38,7 @@ EOF
   sudo unattended-upgrade --dry-run --debug
 }
 
-function awk-config-ufw() {
+function awk_config_ufw() {
   sudo apt update
   sudo apt install -y ufw
   sudo ufw default deny incoming
@@ -55,7 +55,7 @@ function awk-config-ufw() {
   # sudo ufw show added
 }
 
-function awk-config-ssh() {
+function awk_config_ssh() {
   sudo apt update
   sudo apt install -y openssh-server
   sudo tee /etc/ssh/sshd_config.d/1000-awkirin-security.conf > /dev/null <<EOF
@@ -94,7 +94,7 @@ EOF
   sudo systemctl reload ssh
 }
 
-function awk-config-fail2ban() {
+function awk_config_fail2ban() {
   sudo apt update
   sudo apt install -y fail2ban
   sudo tee /etc/fail2ban/jail.d/1000-awkirin.conf > /dev/null <<EOF
@@ -110,10 +110,10 @@ EOF
 sudo systemctl restart fail2ban
 }
 
-awk-config-ssh
-awk-config-fail2ban
-awk-config-updates
-awk-config-ufw
+awk_config_ssh
+awk_config_fail2ban
+awk_config_updates
+awk_config_ufw
 
 
 
