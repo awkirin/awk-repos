@@ -64,6 +64,7 @@ function awk_config_ufw() {
 
   sudo ufw status
   # sudo ufw show added
+
 }
 
 function awk_config_ssh() {
