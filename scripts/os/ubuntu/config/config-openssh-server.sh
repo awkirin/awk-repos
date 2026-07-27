@@ -31,6 +31,11 @@ AllowTcpForwarding no
 # LogLevel VERBOSE
 EOF
 
+# Проверяем конфигурацию до перезагрузки SSH
+sudo sshd -t
 
+# Включаем автозапуск службы
 sudo systemctl enable ssh
+
+# Применяем конфигурацию без разрыва текущих подключений
 sudo systemctl reload ssh
