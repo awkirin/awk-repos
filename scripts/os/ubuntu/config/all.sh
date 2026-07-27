@@ -65,7 +65,7 @@ function awk_config_ufw() {
 function awk_config_ssh() {
   sudo apt update
   sudo apt install -y openssh-server
-  sudo rm -f -- /etc/apt/apt.conf.d/[0-9]*-awkirin-security.conf
+  sudo rm -f -- /etc/ssh/sshd_config.d/[0-9]*-awkirin-security.conf
   sudo tee /etc/ssh/sshd_config.d/1000-awkirin-security.conf > /dev/null <<EOF
 # --- Базовые настройки ---
 # Вход только по ключам, без пароля
@@ -105,7 +105,7 @@ EOF
 function awk_config_fail2ban() {
   sudo apt update
   sudo apt install -y fail2ban
-  sudo rm -f -- /etc/apt/apt.conf.d/[0-9]*-awkirin.conf
+  sudo rm -f -- /etc/fail2ban/jail.d/[0-9]*-awkirin.conf
   sudo tee /etc/fail2ban/jail.d/1000-awkirin.conf > /dev/null <<EOF
 [sshd]
 enabled   = true
