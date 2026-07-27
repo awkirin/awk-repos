@@ -1,14 +1,12 @@
 #!/bin/bash
 set -euo pipefail
 
-sudo apt update
+
 
 function awk-config-updates() {
+  sudo apt update
   sudo apt install -y unattended-upgrades
-  sudo tee /etc/apt/apt.conf.d/1000-awkirin-unattended-upgrades > /dev/null <<EOF
-
-# Разрешить APT принимать изменения в информации о релизе (полезно при обновлениях версии Ubuntu)
-Acquire::AllowReleaseInfoChanges "true";
+  sudo tee /etc/apt/apt.conf.d/1000-awkirin-unattended-upgrades > /dev/null <<'EOF'
 
 # Ежедневно обновлять список пакетов
 APT::Periodic::Update-Package-Lists "1";
