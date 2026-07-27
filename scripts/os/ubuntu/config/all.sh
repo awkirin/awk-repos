@@ -2,6 +2,24 @@
 set -euo pipefail
 
 
+function awk_config_docker() {
+  sudo install -d -m 755 /etc/docker
+  sudo tee /etc/docker/daemon.json > /dev/null <<'EOF'
+{
+  "log-driver": "local",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3",
+    "compress": "true"
+  }
+}
+EOF
+
+  sudo dockerd --validate --config-file=/etc/docker/daemon.json
+  sudo systemctl restart docker
+  sudo docker info --format 'Logging driver: {{.LoggingDriver}}'
+}
+
 function awk_config_time() {
   sudo timedatectl set-timezone Europe/Moscow
   sudo timedatectl set-ntp true
@@ -26,6 +44,31 @@ EOF
   sudo journalctl --disk-usage
 }
 
+function awk_config_docker() {
+  if ! command -v docker > /dev/null 2>&1; then
+    sudo apt update
+    sudo apt install -y ca-certificates curl
+    curl -fsSL https://get.docker.com | sudo sh
+  fi
+
+  sudo install -d -m 755 /etc/docker
+  sudo tee /etc/docker/daemon.json > /dev/null <<'EOF'
+{
+  "log-driver": "local",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3",
+    "compress": "true"
+  }
+}
+EOF
+
+  sudo dockerd --validate --config-file=/etc/docker/daemon.json
+  sudo systemctl enable docker
+  sudo systemctl restart docker
+  sudo docker info --format 'Logging driver: {{.LoggingDriver}}'
+}
+
 # [*] проработано
 function awk_config_updates() {
   sudo apt update
@@ -40,10 +83,8 @@ APT::Periodic::Update-Package-Lists "1";
 # Интервал запуска unattended-upgrades (дни)
 APT::Periodic::Unattended-Upgrade "1";
 
+# Интервал полной очистки кэша APT (дни)
 APT::Periodic::CleanInterval "1";
-
-# Интервал очистки кэша APT (дни)
-APT::Periodic::AutocleanInterval "1";
 
 # Удалять неиспользуемые пакеты ядер (true/false)
 Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
@@ -68,6 +109,9 @@ EOF
 
   # Тестовый запуск без установки обновлений
   sudo unattended-upgrade --dry-run --debug
+
+  # Немедленная очистка кэша APT
+  sudo apt clean
 }
 
 function awk_config_ufw() {
@@ -153,5 +197,7 @@ awk_config_time
 awk_config_journald
 awk_config_ssh
 awk_config_fail2ban
+awk_config_docker
 awk_config_updates
 awk_config_ufw
+awk_config_docker
