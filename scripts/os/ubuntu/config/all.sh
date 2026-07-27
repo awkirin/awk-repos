@@ -122,8 +122,8 @@ function awk_config_ssh() {
   sudo tee /etc/ssh/sshd_config.d/1000-awkirin-security.conf > /dev/null <<EOF
 # --- Базовые настройки ---
 # Вход только по ключам, без пароля
-#PasswordAuthentication no
-#PermitRootLogin no
+PasswordAuthentication no
+PermitRootLogin no
 
 # PAM оставляем включённым для совместимости с системой
 UsePAM yes
