@@ -4,37 +4,40 @@ set -euo pipefail
 function awk_config_updates() {
   sudo apt update
   sudo apt install -y unattended-upgrades
-  sudo tee /etc/apt/apt.conf.d/00-awkirin-unattended-upgrades > /dev/null <<'EOF'
+  sudo tee /etc/apt/apt.conf.d/99-awkirin-unattended-upgrades > /dev/null <<'EOF'
+# --- Обновления и очистка ---
 
-# Ежедневно обновлять список пакетов
+# Интервал обновления списков пакетов, дней
 APT::Periodic::Update-Package-Lists "1";
 
-# Ежедневно запускать unattended-upgrades
+# Интервал запуска unattended-upgrades, дней
 APT::Periodic::Unattended-Upgrade "1";
 
-# Раз в 7 дней удалять устаревшие пакеты из кэша APT
+# Интервал очистки кэша APT, дней
 APT::Periodic::AutocleanInterval "7";
 
-# Автоматическая перезагружзка сервера, если требуется после обновлений
-Unattended-Upgrade::Automatic-Reboot "true";
-
-# Перезагружать даже при наличии активных пользовательских сессий
-Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
-
-# Время автоматической перезагрузки
-Unattended-Upgrade::Automatic-Reboot-Time "04:00";
-
-# Автоматически удалять старые неиспользуемые ядра
+# Удаление неиспользуемых пакетов ядер, true/false
 Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
 
-# Удалять новые неиспользуемые зависимости после обновлений
+# Удаление новых неиспользуемых зависимостей, true/false
 Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+
+# --- Автоперезагрузка ---
+
+# Автоперезагрузка при необходимости, true/false
+Unattended-Upgrade::Automatic-Reboot "true";
+
+# Автоперезагрузка при активных пользовательских сессиях, true/false
+Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
+
+# Время автоперезагрузки, HH:MM
+Unattended-Upgrade::Automatic-Reboot-Time "04:00";
 EOF
 
-  # Включить и запустить системные таймеры APT
+  # Системные таймеры APT
   sudo systemctl enable --now apt-daily.timer apt-daily-upgrade.timer
 
-  # Проверить корректность конфигурации
+  # Валидация конфигурации
   sudo unattended-upgrade --dry-run --debug
 }
 
@@ -114,7 +117,5 @@ awk_config_ssh
 awk_config_fail2ban
 awk_config_updates
 awk_config_ufw
-
-
 
 
