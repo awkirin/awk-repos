@@ -2,7 +2,11 @@
 set -euo pipefail
 
 
-
+function awk_config_time() {
+  sudo timedatectl set-timezone Europe/Moscow
+  sudo timedatectl set-ntp true
+  timedatectl status
+}
 # [*] проработано
 function awk_config_updates() {
   sudo apt update
@@ -122,6 +126,7 @@ sudo systemctl restart fail2ban
 sudo fail2ban-client status sshd
 }
 
+awk_config_time
 awk_config_ssh
 awk_config_fail2ban
 awk_config_updates
