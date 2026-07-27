@@ -2,24 +2,6 @@
 set -euo pipefail
 
 
-function awk_config_docker() {
-  sudo install -d -m 755 /etc/docker
-  sudo tee /etc/docker/daemon.json > /dev/null <<'EOF'
-{
-  "log-driver": "local",
-  "log-opts": {
-    "max-size": "10m",
-    "max-file": "3",
-    "compress": "true"
-  }
-}
-EOF
-
-  sudo dockerd --validate --config-file=/etc/docker/daemon.json
-  sudo systemctl restart docker
-  sudo docker info --format 'Logging driver: {{.LoggingDriver}}'
-}
-
 function awk_config_time() {
   sudo timedatectl set-timezone Europe/Moscow
   sudo timedatectl set-ntp true
@@ -197,7 +179,6 @@ awk_config_time
 awk_config_journald
 awk_config_ssh
 awk_config_fail2ban
-awk_config_docker
 awk_config_updates
 awk_config_ufw
 awk_config_docker
