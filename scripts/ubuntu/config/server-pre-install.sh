@@ -6,7 +6,7 @@ function awk_config_time() {
   sudo timedatectl set-timezone Europe/Moscow
   sudo timedatectl set-ntp true
   timedatectl status
-}
+}; awk_config_time;
 
 function awk_config_journald() {
   sudo install -d -m 755 /etc/systemd/journald.conf.d
@@ -24,7 +24,7 @@ EOF
   sudo journalctl --rotate
   sudo journalctl --vacuum-size=100M --vacuum-time=7day
   sudo journalctl --disk-usage
-}
+}; awk_config_journald;
 
 function awk_config_docker() {
   if ! command -v docker > /dev/null 2>&1; then
@@ -49,7 +49,7 @@ EOF
   sudo systemctl enable docker
   sudo systemctl restart docker
   sudo docker info --format 'Logging driver: {{.LoggingDriver}}'
-}
+}; awk_config_docker;
 
 # [*] проработано
 function awk_config_updates() {
@@ -94,7 +94,7 @@ EOF
 
   # Немедленная очистка кэша APT
   sudo apt clean
-}
+};
 
 function awk_config_ufw() {
   sudo apt update
@@ -113,7 +113,7 @@ function awk_config_ufw() {
   sudo ufw status verbose
   # sudo ufw show added
 
-}
+}; awk_config_ufw;
 
 function awk_config_ssh() {
   sudo apt update
@@ -153,7 +153,7 @@ EOF
 
   # Применяем конфигурацию без разрыва текущих подключений
   sudo systemctl reload ssh
-}
+}; awk_config_ssh;
 
 function awk_config_fail2ban() {
   sudo apt update
@@ -173,12 +173,4 @@ sudo fail2ban-client -t
 sudo systemctl enable fail2ban
 sudo systemctl restart fail2ban
 sudo fail2ban-client status sshd
-}
-
-awk_config_time
-awk_config_journald
-awk_config_ssh
-awk_config_fail2ban
-awk_config_updates
-awk_config_ufw
-awk_config_docker
+}; awk_config_fail2ban;
