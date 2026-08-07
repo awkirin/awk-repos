@@ -8,6 +8,56 @@
 ||clstorage.net
 ||yastatic.net
 
+||alfabank.ru
+
+||vtb.ru
+
+||gazprombank.ru
+
+||raiffeisen.ru
+
+||rshb.ru
+
+||pochta.ru
+
+||psbank.ru
+
+||banki.ru
+
+||ozon.ru
+
+||dns-shop.ru
+
+||citilink.ru
+
+||megamarket.ru
+
+||mvideo.ru
+
+||eldorado.ru
+
+||2gis.ru
+||2gis.com
+
+||yell.ru
+
+||zoomedic.ru
+||awkirin.ru
+
+||zoon.ru
+
+||hh.ru
+
+||samokat.ru
+
+||pikabu.ru
+
+||dzen.ru
+
+||rutube.ru
+
+||habr.com
+
 ||wildberries.ru
 ||wbbasket.ru
 ||wb.ru
@@ -56,8 +106,40 @@
 
 ||mts.ru
 
+||nalog.ru
+
+||beeline.ru
+
+||reg.ru
+
+||timeweb.ru
+
+||selectel.ru
+
+||beget.com
+
+||sprinthost.ru
+
+||megafon.ru
+
+||tele2.ru
+
 ||gov.ru
 
 ||gosuslugi.ru
 
 ||google.com
+
+! =========================
+! Российские CDN / аналитика
+! =========================
+
+||yadro.ru
+
+||top-fwz1.mail.ru
+
+||top100.ru
+
+||rambler.ru
+
+||rambler-co.ru
