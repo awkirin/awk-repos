@@ -35,4 +35,20 @@
 
 ||vpnbook.com
 
+||vpngen.org
+
+||x.com
+||twimg.com
+
+||refactoring.guru
+
+||nnmclub.to
+||nnmstatic.win
+
+||cloudflareinsights.com
+
+||torproject.org
+
+||document360.io
+
 @@||example.com
