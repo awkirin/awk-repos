@@ -85,4 +85,27 @@
 
 ||mullvad.net
 
+||amazon.com
+||awsstatic.com
+
+||spotify.com
+
+||edx.org
+
+||stanford.edu
+
+||trello.com
+
+||zapier.com
+
+||basecamp.com
+
+||clickup.com
+
+||linear.app
+
+||grok.com
+||104.18.29.234
+||104.18.28.234
+
 @@||example.com
