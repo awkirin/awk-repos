@@ -2,7 +2,23 @@
 ! Title: My Russia Proxy List
 ! Last Modified: 2026-08-07
 
-||amnezia.org
-||youtube.com
 
-@@||example.com
+||yandex.ru
+||ya.ru
+||yandex.net
+||clstorage.net
+||yastatic.net
+
+
+||wb.ru
+||mail.ru
+
+
+||vk.com
+||okcdn.ru
+||mradx.net
+||apptracer.ru
+||vk-portal.net
+||vkuserphoto.ru
+||userapi.com
+||tns-counter.ru
