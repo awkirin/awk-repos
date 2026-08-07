@@ -1,0 +1,15 @@
+[AutoProxy 0.2.9]
+! Title: My Russia Proxy List
+! Last Modified: 2026-08-07
+
+||youtube.com
+||youtu.be
+||googlevideo.com
+||ytimg.com
+||discord.com
+||discord.gg
+||discordapp.com
+||openai.com
+||chatgpt.com
+
+@@||example.com
