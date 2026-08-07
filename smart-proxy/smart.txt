@@ -67,10 +67,22 @@
 ||linkedin.com
 ||licdn.com
 
-||microsoft.com
-||aspnetcdn.com
-||msecnd.net
-||s-microsoft.com
+||splunk.com
+||splunkcloud.com
 
+||n8n.io
+||n8n.cloud
+
+||hashicorp.com
+
+||helm.sh
+
+||render.com
+
+||hashnode.com
+
+||wise.com
+
+||mullvad.net
 
 @@||example.com
