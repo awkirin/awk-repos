@@ -22,3 +22,5 @@
 ||vkuserphoto.ru
 ||userapi.com
 ||tns-counter.ru
+
+||gemini.google.com
