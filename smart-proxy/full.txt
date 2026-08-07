@@ -2,17 +2,18 @@
 ! Title: My Russia Proxy List
 ! Last Modified: 2026-08-07
 
-
 ||yandex.ru
 ||ya.ru
 ||yandex.net
 ||clstorage.net
 ||yastatic.net
 
-
+||wildberries.ru
+||wbbasket.ru
 ||wb.ru
-||mail.ru
+||paywb.com
 
+||mail.ru
 
 ||vk.com
 ||okcdn.ru
@@ -23,5 +24,8 @@
 ||userapi.com
 ||tns-counter.ru
 
+||reg.ru
+
+||gosuslugi.ru
 
 ||google.com

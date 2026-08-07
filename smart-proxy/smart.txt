@@ -2,10 +2,17 @@
 ! Title: My Russia Proxy List
 ! Last Modified: 2026-08-07
 
+
 ||amnezia.org
 
 ||youtube.com
 ||googlevideo.com
 
+||chatgpt.com
+
+||claude.ai
+||claude.com
+
+||telegram.org
 
 @@||example.com
