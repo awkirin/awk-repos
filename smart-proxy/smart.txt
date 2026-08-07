@@ -106,6 +106,9 @@
 
 ||infisical.com
 
+||supabase.com
+||supabase.co
+
 ||grok.com
 ||104.18.29.234
 ||104.18.28.234
