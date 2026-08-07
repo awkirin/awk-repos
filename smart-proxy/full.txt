@@ -10,6 +10,10 @@
 
 ||alfabank.ru
 
+||kinopoisk.ru
+
+||afisha.ru
+
 ||vtb.ru
 
 ||gazprombank.ru
@@ -52,6 +56,20 @@
 
 ||pikabu.ru
 
+||yandexmaps.ru
+
+||avtodor.ru
+
+||rzd.ru
+
+||rzd-partner.ru
+
+||tutu.ru
+
+||perekrestok.ru
+
+||vkusvill.ru
+
 ||dzen.ru
 
 ||rutube.ru
@@ -62,6 +80,10 @@
 ||wbbasket.ru
 ||wb.ru
 ||paywb.com
+
+||delivery-club.ru
+
+||fix-price.ru
 
 ||avito.ru
 ||avito.st
@@ -94,6 +116,7 @@
 ||stmtag.ru
 
 ||tbank.ru
+||tinkoff.ru
 ||bumlam.com
 ||statad.ru
 ||t-static.ru
@@ -129,6 +152,12 @@
 ||gosuslugi.ru
 
 ||google.com
+
+||leroymerlin.ru
+
+||hoff.ru
+
+||vseinstrumenti.ru
 
 ! =========================
 ! Российские CDN / аналитика
