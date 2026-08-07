@@ -10,6 +10,7 @@
 
 ||chatgpt.com
 
+||anthropic.com
 ||claude.ai
 ||claude.com
 
@@ -52,5 +53,24 @@
 ||torproject.org
 
 ||document360.io
+
+||tiktok.com
+||ttwstatic.com
+||tiktokv.com
+
+||notion.so
+||notion.com
+||notion.site
+
+||medium.com
+
+||linkedin.com
+||licdn.com
+
+||microsoft.com
+||aspnetcdn.com
+||msecnd.net
+||s-microsoft.com
+
 
 @@||example.com
