@@ -28,6 +28,19 @@
 
 ||reg.ru
 
+||sberbank.ru
+||sber.ru
+||adriver.ru
+||adservings.ru
+||sberdevices.ru
+||sbermarketing.ru
+||sbrf.ru
+||cdnvideo.ru
+||top100.ru
+||stmtag.ru
+
+||gov.ru
+
 ||gosuslugi.ru
 
 ||google.com
