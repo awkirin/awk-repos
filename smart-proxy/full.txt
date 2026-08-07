@@ -14,6 +14,10 @@
 ||paywb.com
 
 ||avito.ru
+||avito.st
+||buzzoola.com
+||uxfeedback.ru
+||yastatic.net
 
 ||mail.ru
 
