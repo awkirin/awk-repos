@@ -39,6 +39,19 @@
 ||top100.ru
 ||stmtag.ru
 
+||tbank.ru
+||bumlam.com
+||statad.ru
+||t-static.ru
+||skcrtxr.com
+||adhigh.net
+||tbank-online.com
+||cdn-tinkoff.ru
+||targetads.io
+||hybrid.ai
+
+||mts.ru
+
 ||gov.ru
 
 ||gosuslugi.ru
