@@ -111,4 +111,18 @@
 
 ||jetbrains.com
 
+||microsoft.com
+
+||jetbra.in
+
+||hero-sms.com
+
+||chatgate.ai
+
+||freevpn.me
+
+||twitter.com
+
+||addthis.com
+
 @@||example.com
