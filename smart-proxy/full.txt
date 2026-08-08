@@ -166,6 +166,7 @@
 @@||megafon.ru
 
 @@||tele2.ru
+@@||t2.ru
 
 @@||gov.ru
 
