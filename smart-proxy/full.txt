@@ -22,169 +22,169 @@
 @@/^(?:https?|wss?):\/\/172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3}\.)\d{1,3}(?::\d+)?(?:\/|$)/
 @@/^(?:https?|wss?):\/\/192\.168\.(?:\d{1,3}\.)\d{1,3}(?::\d+)?(?:\/|$)/
 
-||yandex.ru
-||ya.ru
-||yandex.net
-||clstorage.net
-||yastatic.net
+@@||yandex.ru
+@@||ya.ru
+@@||yandex.net
+@@||clstorage.net
+@@||yastatic.net
 
-||alfabank.ru
+@@||alfabank.ru
 
-||kinopoisk.ru
+@@||kinopoisk.ru
 
-||afisha.ru
+@@||afisha.ru
 
-||vtb.ru
+@@||vtb.ru
 
-||gazprombank.ru
+@@||gazprombank.ru
 
-||raiffeisen.ru
+@@||raiffeisen.ru
 
-||rshb.ru
+@@||rshb.ru
 
-||pochta.ru
+@@||pochta.ru
 
-||psbank.ru
+@@||psbank.ru
 
-||banki.ru
+@@||banki.ru
 
-||ozon.ru
+@@||ozon.ru
 
-||dns-shop.ru
+@@||dns-shop.ru
 
-||citilink.ru
+@@||citilink.ru
 
-||megamarket.ru
+@@||megamarket.ru
 
-||mvideo.ru
+@@||mvideo.ru
 
-||eldorado.ru
+@@||eldorado.ru
 
-||2gis.ru
-||2gis.com
+@@||2gis.ru
+@@||2gis.com
 
-||yell.ru
+@@||yell.ru
 
-||zoomedic.ru
-||awkirin.ru
+@@||zoomedic.ru
+@@||awkirin.ru
 
-||zoon.ru
+@@||zoon.ru
 
-||hh.ru
+@@||hh.ru
 
-||samokat.ru
+@@||samokat.ru
 
-||pikabu.ru
+@@||pikabu.ru
 
-||yandexmaps.ru
+@@||yandexmaps.ru
 
-||avtodor.ru
+@@||avtodor.ru
 
-||rzd.ru
+@@||rzd.ru
 
-||rzd-partner.ru
+@@||rzd-partner.ru
 
-||tutu.ru
+@@||tutu.ru
 
-||perekrestok.ru
+@@||perekrestok.ru
 
-||vkusvill.ru
+@@||vkusvill.ru
 
-||dzen.ru
+@@||dzen.ru
 
-||rutube.ru
+@@||rutube.ru
 
-||habr.com
+@@||habr.com
 
-||wildberries.ru
-||wbbasket.ru
-||wb.ru
-||paywb.com
+@@||wildberries.ru
+@@||wbbasket.ru
+@@||wb.ru
+@@||paywb.com
 
-||delivery-club.ru
+@@||delivery-club.ru
 
-||fix-price.ru
+@@||fix-price.ru
 
-||avito.ru
-||avito.st
-||buzzoola.com
-||uxfeedback.ru
-||yastatic.net
+@@||avito.ru
+@@||avito.st
+@@||buzzoola.com
+@@||uxfeedback.ru
+@@||yastatic.net
 
-||mail.ru
+@@||mail.ru
 
-||vk.com
-||okcdn.ru
-||mradx.net
-||apptracer.ru
-||vk-portal.net
-||vkuserphoto.ru
-||userapi.com
-||tns-counter.ru
+@@||vk.com
+@@||okcdn.ru
+@@||mradx.net
+@@||apptracer.ru
+@@||vk-portal.net
+@@||vkuserphoto.ru
+@@||userapi.com
+@@||tns-counter.ru
 
-||reg.ru
+@@||reg.ru
 
-||sberbank.ru
-||sber.ru
-||adriver.ru
-||adservings.ru
-||sberdevices.ru
-||sbermarketing.ru
-||sbrf.ru
-||cdnvideo.ru
-||top100.ru
-||stmtag.ru
+@@||sberbank.ru
+@@||sber.ru
+@@||adriver.ru
+@@||adservings.ru
+@@||sberdevices.ru
+@@||sbermarketing.ru
+@@||sbrf.ru
+@@||cdnvideo.ru
+@@||top100.ru
+@@||stmtag.ru
 
-||tbank.ru
-||tinkoff.ru
-||bumlam.com
-||statad.ru
-||t-static.ru
-||skcrtxr.com
-||adhigh.net
-||tbank-online.com
-||cdn-tinkoff.ru
-||targetads.io
-||hybrid.ai
+@@||tbank.ru
+@@||tinkoff.ru
+@@||bumlam.com
+@@||statad.ru
+@@||t-static.ru
+@@||skcrtxr.com
+@@||adhigh.net
+@@||tbank-online.com
+@@||cdn-tinkoff.ru
+@@||targetads.io
+@@||hybrid.ai
 
-||mts.ru
+@@||mts.ru
 
-||nalog.ru
+@@||nalog.ru
 
-||beeline.ru
+@@||beeline.ru
 
-||reg.ru
+@@||reg.ru
 
-||timeweb.ru
+@@||timeweb.ru
 
-||selectel.ru
+@@||selectel.ru
 
-||beget.com
+@@||beget.com
 
-||sprinthost.ru
+@@||sprinthost.ru
 
-||megafon.ru
+@@||megafon.ru
 
-||tele2.ru
+@@||tele2.ru
 
-||gov.ru
+@@||gov.ru
 
-||gosuslugi.ru
+@@||gosuslugi.ru
 
-||google.com
+@@||google.com
 
-||leroymerlin.ru
+@@||leroymerlin.ru
 
-||hoff.ru
+@@||hoff.ru
 
-||vseinstrumenti.ru
+@@||vseinstrumenti.ru
 
-||yadro.ru
+@@||yadro.ru
 
-||top-fwz1.mail.ru
+@@||top-fwz1.mail.ru
 
-||top100.ru
+@@||top100.ru
 
-||rambler.ru
+@@||rambler.ru
 
-||rambler-co.ru
+@@||rambler-co.ru
