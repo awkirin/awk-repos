@@ -2,6 +2,10 @@
 ! Title: My Russia Proxy List
 ! Last Modified: 2026-08-07
 
+||localhost
+||127.0.0.1
+||[::1]
+
 ||yandex.ru
 ||ya.ru
 ||yandex.net
