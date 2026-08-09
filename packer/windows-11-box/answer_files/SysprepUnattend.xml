@@ -13,7 +13,7 @@
   </settings>
   <settings pass="oobeSystem">
     <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-      <InputLocale>0409:00000409;0419:00000419</InputLocale>
+      <InputLocale>ru-RU</InputLocale>
       <SystemLocale>ru-RU</SystemLocale>
       <UILanguage>ru-RU</UILanguage>
       <UserLocale>ru-RU</UserLocale>
@@ -36,4 +36,3 @@
     </component>
   </settings>
 </unattend>
-

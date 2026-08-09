@@ -27,7 +27,7 @@ end
   try {
     & vagrant up --provider virtualbox
     if ($LASTEXITCODE -ne 0) { throw "vagrant up failed" }
-    & vagrant winrm -c 'powershell -NoProfile -Command "$edition=(Get-WindowsEdition -Online).Edition; $input=(Get-WinDefaultInputMethodOverride).InputTip; $explorer=Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced; if($edition -ne ''Professional'' -or $input -ne ''0409:00000409'' -or $explorer.HideFileExt -ne 0 -or $explorer.Hidden -ne 1){exit 1}"'
+    & vagrant winrm -c 'powershell -NoProfile -Command "$edition=(Get-WindowsEdition -Online).Edition; $guestAdditions=Test-Path ''C:\Program Files\Oracle\VirtualBox Guest Additions\VBoxService.exe''; if($edition -ne ''Professional'' -or -not $guestAdditions){exit 1}"'
     if ($LASTEXITCODE -ne 0) { throw "guest smoke checks failed" }
   } finally {
     & vagrant destroy --force
@@ -39,4 +39,3 @@ end
 }
 
 Write-Host "Smoke test passed."
-

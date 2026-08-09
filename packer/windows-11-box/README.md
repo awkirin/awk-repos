@@ -2,6 +2,8 @@
 
 Локальная Packer-сборка Windows 11 Pro для VirtualBox 7.2+.
 
+Образ сохраняет штатные настройки и приложения Windows. Сборка добавляет только необходимое для Vagrant: локальную учётную запись, WinRM и VirtualBox Guest Additions.
+
 ## Сборка
 
 Требуются Packer 1.14+ (системный или `.tools/packer.exe`), Vagrant 2.4.9+ и VirtualBox 7.2+.

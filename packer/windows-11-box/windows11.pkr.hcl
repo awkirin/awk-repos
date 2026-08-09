@@ -52,16 +52,9 @@ source "virtualbox-iso" "windows11" {
   disk_size = 81920
 
   firmware                  = "efi"
-  chipset                   = "ich9"
   iso_interface             = "sata"
   hard_drive_interface      = "sata"
   sata_port_count           = 4
-  hard_drive_nonrotational  = true
-  hard_drive_discard        = true
-  gfx_controller            = "vboxsvga"
-  gfx_vram_size             = 128
-  gfx_accelerate_3d         = false
-  headless                  = false
   guest_additions_mode      = "attach"
   guest_additions_interface = "sata"
   shutdown_timeout          = "30m"
@@ -74,9 +67,6 @@ source "virtualbox-iso" "windows11" {
 
   vboxmanage = [
     ["modifyvm", "{{.Name}}", "--tpm-type", "2.0"],
-    ["modifyvm", "{{.Name}}", "--audio-enabled", "off"],
-    ["modifyvm", "{{.Name}}", "--clipboard-mode", "hosttoguest"],
-    ["modifyvm", "{{.Name}}", "--drag-and-drop", "disabled"],
     ["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "2", "--device", "0", "--type", "dvddrive", "--medium", var.answer_iso_path]
   ]
 
@@ -94,8 +84,6 @@ build {
   provisioner "powershell" {
     scripts = [
       "scripts/install-guest-additions.ps1",
-      "scripts/configure-windows.ps1",
-      "scripts/debloat.ps1",
       "scripts/prepare-sysprep.ps1",
       "scripts/verify.ps1"
     ]

@@ -9,8 +9,5 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |virtualbox|
     virtualbox.customize ["modifyvm", :id, "--firmware", "efi"]
     virtualbox.customize ["modifyvm", :id, "--tpm-type", "2.0"]
-    virtualbox.customize ["modifyvm", :id, "--graphicscontroller", "vboxsvga"]
-    virtualbox.customize ["modifyvm", :id, "--vram", "128"]
-    virtualbox.customize ["modifyvm", :id, "--audio-enabled", "off"]
   end
 end

@@ -11,9 +11,3 @@ $sysprepSource = Get-PSDrive -PSProvider FileSystem |
 if (-not $sysprepSource) { throw "SysprepUnattend.xml media was not found" }
 
 Copy-Item -LiteralPath $sysprepSource -Destination "C:\Windows\Panther\SysprepUnattend.xml" -Force
-
-Get-ChildItem -Path "C:\Windows\Temp" -Force -ErrorAction SilentlyContinue |
-  Where-Object { $_.Name -ne "enable-winrm.ps1" } |
-  Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-Clear-RecycleBin -Force -ErrorAction SilentlyContinue
-Optimize-Volume -DriveLetter C -ReTrim -ErrorAction SilentlyContinue
