@@ -1,0 +1,8 @@
+Win11_25H2_Russian_x64.iso
+output/
+packer_cache/
+output-*/
+.smoke-test/
+.tools/
+.generated/
+*.box
