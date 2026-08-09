@@ -24,8 +24,8 @@ source "virtualbox-iso" "windows11" {
   winrm_password = "vagrant"
   winrm_timeout  = "45m"
 
-  cpus      = 4
-  memory    = 8192
+  cpus      = 8
+  memory    = 16384
   disk_size = 81920
 
   firmware             = "efi"

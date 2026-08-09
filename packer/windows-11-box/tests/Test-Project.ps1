@@ -31,6 +31,17 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $projectRoot "image\answ
   [void][xml](Get-Content -LiteralPath $file.FullName -Raw)
 }
 
+$autounattend = [xml](Get-Content -LiteralPath (Join-Path $projectRoot "image\answer-files\Autounattend.xml") -Raw)
+$namespaceManager = New-Object System.Xml.XmlNamespaceManager($autounattend.NameTable)
+$namespaceManager.AddNamespace("u", $autounattend.DocumentElement.NamespaceURI)
+$firstLogonCommand = $autounattend.SelectSingleNode(
+  "/u:unattend/u:settings[@pass='oobeSystem']/u:component/u:FirstLogonCommands/u:SynchronousCommand/u:CommandLine",
+  $namespaceManager
+)
+Assert-Condition ($null -ne $firstLogonCommand) "First logon command is missing"
+Assert-Condition ($firstLogonCommand.InnerText.Length -le 1024) "First logon command exceeds the Windows Setup limit"
+Assert-Condition ($firstLogonCommand.InnerText -match 'Enable-PSRemoting') "First logon command must enable WinRM"
+
 $hcl = Get-Content -LiteralPath (Join-Path $projectRoot "image\windows11.pkr.hcl") -Raw
 $vagrantfile = Get-Content -LiteralPath (Join-Path $projectRoot "image\vagrant\Vagrantfile.template") -Raw
 $buildScript = Get-Content -LiteralPath (Join-Path $projectRoot "tools\Build-Box.ps1") -Raw
