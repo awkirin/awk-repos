@@ -16,7 +16,7 @@ packer {
 source "virtualbox-iso" "windows11" {
   vm_name       = "windows-11-25h2-pro-ru"
   guest_os_type = "Windows11_64"
-  iso_url       = "Win11_25H2_Russian_x64.iso"
+  iso_url       = "iso/Win11_25H2_Russian_x64.iso"
   iso_checksum  = "sha256:e1efe78f43a1e059912fc600bbcecac349a33f8bb7b1562b0a2966c31e9674bc"
 
   communicator   = "winrm"

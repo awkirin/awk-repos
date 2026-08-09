@@ -1,13 +1,7 @@
-# Локальный установочный образ Windows
-/Win11_25H2_Russian_x64.iso
+# Локальные установочные образы
+/iso/*.iso
 
 # Артефакты и кеш Packer
 /build/
 /output/
 *.box
-
-# Результаты сборок со старой структурой
-/.generated/
-/output-*/
-/packer_cache/
-/.smoke-test/
