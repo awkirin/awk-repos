@@ -8,9 +8,9 @@
 
 ## Структура проекта
 
-`windows11.pkr.hcl` задаёт автоматическую установку, порядок provisioner-ов и создание Vagrant box. В корне находятся только два сценария: `Build-Box.ps1` собирает образ, а `Test-Box.ps1` выполняет smoke-тест. В `scripts/` находятся шаги, выполняемые внутри гостевой Windows; в `answer-files/` — файлы unattended-установки; в `vagrant/` — шаблон конфигурации готового box.
+`windows11.pkr.hcl` задаёт автоматическую установку, порядок provisioner-ов и создание Vagrant box. Корневые сценарии имеют отдельные задачи: `Build-Box.ps1` управляет сборкой, `New-AnswerIso.ps1` создаёт unattended CD, а `Test-Box.ps1` выполняет smoke-тест. В `scripts/` находятся шаги, выполняемые внутри гостевой Windows; в `answer-files/` — файлы unattended-установки; в `vagrant/` — шаблон конфигурации готового box.
 
-Каталоги `output/`, `output-*`, `packer_cache/` и `.smoke-test/` содержат временные результаты и не являются исходным кодом.
+Каталоги `.generated/`, `output/`, `output-*`, `packer_cache/` и `.smoke-test/` содержат временные результаты и не являются исходным кодом.
 
 ## Сборка и проверка
 

@@ -5,6 +5,7 @@
 /output/
 /output-*/
 /packer_cache/
+/.generated/
 *.box
 
 # Временная среда smoke-теста
