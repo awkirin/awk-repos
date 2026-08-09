@@ -5,15 +5,20 @@ $boxPath = Join-Path $projectRoot "output\windows11-25h2-pro-ru-virtualbox.box"
 $testRoot = Join-Path $projectRoot "build\smoke-test-$PID"
 $boxName = "windows-11-25h2-pro-ru-smoke-test-$PID"
 $boxAdded = $false
+$diagnosticsRoot = Join-Path $projectRoot "build\diagnostics"
+$smokeLog = Join-Path $diagnosticsRoot ("{0}-smoke.log" -f (Get-Date -Format "yyyyMMdd-HHmmss"))
 
-Get-Command vagrant -ErrorAction Stop | Out-Null
-if (-not (Test-Path -LiteralPath $boxPath)) { throw "Box not found: $boxPath" }
-
-New-Item -ItemType Directory -Path $testRoot -Force | Out-Null
+New-Item -ItemType Directory -Path $diagnosticsRoot -Force | Out-Null
+Start-Transcript -LiteralPath $smokeLog | Out-Null
 try {
-  & vagrant box add --force --name $boxName $boxPath
-  if ($LASTEXITCODE -ne 0) { throw "vagrant box add failed" }
-  $boxAdded = $true
+  Get-Command vagrant -ErrorAction Stop | Out-Null
+  if (-not (Test-Path -LiteralPath $boxPath)) { throw "Box not found: $boxPath" }
+
+  New-Item -ItemType Directory -Path $testRoot -Force | Out-Null
+  try {
+    & vagrant box add --force --name $boxName $boxPath
+    if ($LASTEXITCODE -ne 0) { throw "vagrant box add failed" }
+    $boxAdded = $true
 
   @"
 Vagrant.configure("2") do |config|
@@ -21,16 +26,16 @@ Vagrant.configure("2") do |config|
   config.vm.boot_timeout = 1200
   config.vm.provider "virtualbox" do |virtualbox|
     virtualbox.gui = true
-    virtualbox.cpus = 2
-    virtualbox.memory = 8192
+    virtualbox.cpus = 4
+    virtualbox.memory = 16384
   end
 end
 "@ | Set-Content -LiteralPath (Join-Path $testRoot "Vagrantfile") -Encoding UTF8
 
-  Push-Location $testRoot
-  try {
-    & vagrant up --provider virtualbox
-    if ($LASTEXITCODE -ne 0) { throw "vagrant up failed" }
+    Push-Location $testRoot
+    try {
+      & vagrant up --provider virtualbox
+      if ($LASTEXITCODE -ne 0) { throw "vagrant up failed" }
 
     $guestCheck = @'
 $ErrorActionPreference = "Stop"
@@ -48,16 +53,18 @@ if ($connectTest.Content.Trim() -ne "Microsoft Connect Test") { throw "Internet 
 $tpm = Get-CimInstance -Namespace "root\cimv2\Security\MicrosoftTpm" -ClassName Win32_Tpm
 if (-not $tpm -or $tpm.SpecVersion -notmatch "2\.0") { throw "TPM 2.0 is unavailable" }
 '@
-    $encodedCheck = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($guestCheck))
-    & vagrant winrm -c "powershell -NoProfile -EncodedCommand $encodedCheck"
-    if ($LASTEXITCODE -ne 0) { throw "guest smoke checks failed" }
+      $encodedCheck = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($guestCheck))
+      & vagrant winrm -c "powershell -NoProfile -EncodedCommand $encodedCheck"
+      if ($LASTEXITCODE -ne 0) { throw "guest smoke checks failed" }
+    } finally {
+      & vagrant destroy --force
+      Pop-Location
+    }
   } finally {
-    & vagrant destroy --force
-    Pop-Location
+    if ($boxAdded) { & vagrant box remove --force $boxName }
+    if (Test-Path -LiteralPath $testRoot) { Remove-Item -LiteralPath $testRoot -Recurse -Force }
   }
+  Write-Host "Smoke test passed."
 } finally {
-  if ($boxAdded) { & vagrant box remove --force $boxName }
-  if (Test-Path -LiteralPath $testRoot) { Remove-Item -LiteralPath $testRoot -Recurse -Force }
+  Stop-Transcript | Out-Null
 }
-
-Write-Host "Smoke test passed."

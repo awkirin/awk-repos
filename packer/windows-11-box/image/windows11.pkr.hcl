@@ -19,10 +19,11 @@ source "virtualbox-iso" "windows11" {
   iso_url       = "iso/Win11_25H2_Russian_x64.iso"
   iso_checksum  = "sha256:e1efe78f43a1e059912fc600bbcecac349a33f8bb7b1562b0a2966c31e9674bc"
 
-  communicator   = "winrm"
-  winrm_username = "vagrant"
-  winrm_password = "vagrant"
-  winrm_timeout  = "45m"
+  communicator            = "winrm"
+  winrm_username          = "vagrant"
+  winrm_password          = "vagrant"
+  winrm_timeout           = "60m"
+  pause_before_connecting = "5m"
 
   cpus      = 4
   memory    = 16384
@@ -36,7 +37,7 @@ source "virtualbox-iso" "windows11" {
   shutdown_timeout     = "30m"
   output_directory     = "build/virtualbox"
 
-  boot_wait = "5s"
+  boot_wait = "10s"
   boot_command = [
     "<enter><wait5>"
   ]
@@ -62,7 +63,7 @@ build {
   }
 
   provisioner "windows-restart" {
-    restart_timeout = "15m"
+    restart_timeout = "30m"
   }
 
   provisioner "powershell" {

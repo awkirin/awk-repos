@@ -32,6 +32,7 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $projectRoot "image\answ
 }
 
 $autounattend = [xml](Get-Content -LiteralPath (Join-Path $projectRoot "image\answer-files\Autounattend.xml") -Raw)
+$sysprepUnattend = [xml](Get-Content -LiteralPath (Join-Path $projectRoot "image\answer-files\SysprepUnattend.xml") -Raw)
 $namespaceManager = New-Object System.Xml.XmlNamespaceManager($autounattend.NameTable)
 $namespaceManager.AddNamespace("u", $autounattend.DocumentElement.NamespaceURI)
 $firstLogonCommand = $autounattend.SelectSingleNode(
@@ -41,6 +42,34 @@ $firstLogonCommand = $autounattend.SelectSingleNode(
 Assert-Condition ($null -ne $firstLogonCommand) "First logon command is missing"
 Assert-Condition ($firstLogonCommand.InnerText.Length -le 1024) "First logon command exceeds the Windows Setup limit"
 Assert-Condition ($firstLogonCommand.InnerText -match 'enable-winrm\.ps1') "First logon command must run the WinRM bootstrap script"
+$initialOobe = $autounattend.SelectSingleNode(
+  "/u:unattend/u:settings[@pass='oobeSystem']/u:component/u:OOBE",
+  $namespaceManager
+)
+Assert-Condition (
+  $initialOobe.SkipMachineOOBE -eq "true" -and
+  $initialOobe.SkipUserOOBE -eq "true"
+) "Initial setup must not require interactive OOBE"
+
+$sysprepNamespaceManager = New-Object System.Xml.XmlNamespaceManager($sysprepUnattend.NameTable)
+$sysprepNamespaceManager.AddNamespace("u", $sysprepUnattend.DocumentElement.NamespaceURI)
+$sysprepWinRmCommand = $sysprepUnattend.SelectSingleNode(
+  "/u:unattend/u:settings[@pass='oobeSystem']/u:component/u:FirstLogonCommands/u:SynchronousCommand/u:CommandLine",
+  $sysprepNamespaceManager
+)
+Assert-Condition ($null -ne $sysprepWinRmCommand) "Sysprep must restore WinRM after OOBE is ready"
+Assert-Condition ($sysprepWinRmCommand.InnerText -match 'Enable-WinRM\.ps1') "Sysprep first logon must restore WinRM"
+$sysprepOobe = $sysprepUnattend.SelectSingleNode(
+  "/u:unattend/u:settings[@pass='oobeSystem']/u:component/u:OOBE",
+  $sysprepNamespaceManager
+)
+Assert-Condition (
+  $sysprepOobe.SkipMachineOOBE -eq "true" -and
+  $sysprepOobe.SkipUserOOBE -eq "true"
+) "Sysprep must not require interactive OOBE"
+Assert-Condition (
+  $null -eq $sysprepUnattend.SelectSingleNode("/u:unattend/u:settings[@pass='specialize']//u:RunSynchronous", $sysprepNamespaceManager)
+) "Sysprep must not run PowerShell synchronously during specialize"
 
 $hcl = Get-Content -LiteralPath (Join-Path $projectRoot "image\windows11.pkr.hcl") -Raw
 $vagrantfile = Get-Content -LiteralPath (Join-Path $projectRoot "image\vagrant\Vagrantfile.template") -Raw
@@ -71,6 +100,12 @@ Assert-Condition (
   $restartIndex -lt $sysprepIndex -and
   $sysprepIndex -lt $verifyIndex
 ) "Guest provisioners are missing or out of order"
+Assert-Condition ($hcl -match 'restart_timeout\s*=\s*"30m"') "Guest Additions reboot timeout must cover slow Windows driver finalization"
+Assert-Condition ($hcl -match 'winrm_timeout\s*=\s*"60m"') "Initial WinRM timeout must cover slow Windows Setup"
+Assert-Condition ($hcl -match 'boot_wait\s*=\s*"10s"') "Packer must wait for the EFI optical boot prompt"
+Assert-Condition ($hcl -match 'pause_before_connecting\s*=\s*"5m"') "Packer must not provision during Windows first-boot finalization"
+Assert-Condition ($hcl -match 'cpus\s*=\s*4') "Build VM must use four vCPUs"
+Assert-Condition ($smokeTest -match 'virtualbox\.cpus\s*=\s*4') "Smoke VM must exercise the box with four vCPUs"
 Assert-Condition (
   $hcl -match 'Start-ScheduledTask -TaskName PackerSysprep' -and
   $prepareSysprep -match 'Register-ScheduledTask' -and
