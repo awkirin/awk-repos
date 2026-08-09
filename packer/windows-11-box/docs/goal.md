@@ -10,10 +10,9 @@ Windows 11 Pro 25H2 RU box для Vagrant и VirtualBox.
 
 ## Критерии готовности
 
-- `./tests/Test-Project.ps1` проходит.
-- Полная сборка через `./tools/Build-Box.ps1` завершается успешно.
-- Изменения provisioner-ов проверяются в `image/scripts/verify.ps1`.
-- После полной сборки `./tests/Test-Box.ps1` подтверждает запуск и доступ по
+- `.\tests\Test-Project.ps1` проходит.
+- Полная сборка через `.\tools\Build-Box.ps1` завершается успешно.
+- После полной сборки `.\tests\Test-Box.ps1` подтверждает запуск и доступ по
   WinRM.
 
 Реализация описана в [architecture.md](architecture.md).
