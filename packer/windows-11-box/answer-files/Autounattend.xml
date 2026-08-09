@@ -27,7 +27,8 @@
       </DiskConfiguration>
       <ImageInstall>
         <OSImage>
-          <InstallFrom><MetaData wcm:action="add"><Key>/IMAGE/INDEX</Key><Value>${edition_index}</Value></MetaData></InstallFrom>
+          <!-- Index 4 is Windows 11 Pro in the checksum-pinned ISO. -->
+          <InstallFrom><MetaData wcm:action="add"><Key>/IMAGE/INDEX</Key><Value>4</Value></MetaData></InstallFrom>
           <InstallTo><DiskID>0</DiskID><PartitionID>3</PartitionID></InstallTo>
           <WillShowUI>OnError</WillShowUI>
         </OSImage>
@@ -42,18 +43,6 @@
         </ProductKey>
       </UserData>
       <EnableFirewall>true</EnableFirewall>
-    </component>
-  </settings>
-
-  <settings pass="specialize">
-    <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
-      <RunSynchronous>
-        <RunSynchronousCommand wcm:action="add"><Order>1</Order><Path>powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Set-NetConnectionProfile -NetworkCategory Private -ErrorAction SilentlyContinue; winrm quickconfig -quiet; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true; Set-Item WSMan:\localhost\Service\Auth\Basic -Value true; Enable-PSRemoting -SkipNetworkProfileCheck -Force"</Path></RunSynchronousCommand>
-      </RunSynchronous>
-    </component>
-    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-      <ComputerName>WINDOWS11</ComputerName>
-      <TimeZone>Russian Standard Time</TimeZone>
     </component>
   </settings>
 
@@ -86,7 +75,7 @@
       <AutoLogon>
         <Enabled>true</Enabled>
         <Username>vagrant</Username>
-        <LogonCount>2</LogonCount>
+        <LogonCount>1</LogonCount>
         <Password><Value>vagrant</Value><PlainText>true</PlainText></Password>
       </AutoLogon>
       <FirstLogonCommands>

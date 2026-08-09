@@ -8,14 +8,13 @@
 
 ## Структура проекта
 
-`windows11.pkr.hcl` задаёт источник Packer, порядок provisioner-ов и создание Vagrant box. Корневые PowerShell-скрипты управляют сборкой: `Build-Box.ps1` создаёт образ, `Test-Box.ps1` выполняет smoke-тест, а остальные скрипты готовят установочный носитель. В `scripts/` находятся только шаги, выполняемые внутри гостевой Windows; в `answer_files/` — шаблоны unattended-установки; в `vagrant/` — шаблон конфигурации готового box.
+`windows11.pkr.hcl` задаёт автоматическую установку, порядок provisioner-ов и создание Vagrant box. В корне находятся только два сценария: `Build-Box.ps1` собирает образ, а `Test-Box.ps1` выполняет smoke-тест. В `scripts/` находятся шаги, выполняемые внутри гостевой Windows; в `answer-files/` — файлы unattended-установки; в `vagrant/` — шаблон конфигурации готового box.
 
-Каталоги `.generated/`, `output/`, `output-*`, `packer_cache/` и `.smoke-test/` содержат временные результаты и не являются исходным кодом.
+Каталоги `output/`, `output-*`, `packer_cache/` и `.smoke-test/` содержат временные результаты и не являются исходным кодом.
 
 ## Сборка и проверка
 
-- `./Build-Box.ps1` — проверяет ISO, валидирует Packer и создаёт `output/windows11-25h2-pro-ru-virtualbox.box`.
-- `./Build-Box.ps1 -EditionIndex <n>` — использует указанный индекс редакции без запуска DISM.
+- `./Build-Box.ps1` — инициализирует Packer и создаёт `output/windows11-25h2-pro-ru-virtualbox.box`; Packer проверяет ISO по SHA-256 из HCL.
 - `./Build-Box.ps1 -Force` — повторно собирает существующий артефакт.
 - `packer fmt -check .` — проверяет форматирование HCL.
 - `./Test-Box.ps1` — загружает box через Vagrant, проверяет гостевую систему по WinRM и удаляет тестовую VM.

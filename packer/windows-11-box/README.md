@@ -6,13 +6,11 @@
 
 ## Сборка
 
-Требуются Packer 1.14+ (системный или `.tools/packer.exe`), Vagrant 2.4.9+ и VirtualBox 7.2+.
+Требуются Packer 1.14+, Vagrant 2.4.9+, VirtualBox 7.2+ и `Win11_25H2_Russian_x64.iso` в корне проекта.
 
 ```powershell
 .\Build-Box.ps1
 ```
-
-При запуске появится один запрос UAC: административные права нужны только для чтения списка редакций внутри ISO через DISM.
 
 Готовый файл появится в `output/windows11-25h2-pro-ru-virtualbox.box`.
 

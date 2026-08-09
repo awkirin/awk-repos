@@ -1,8 +1,11 @@
-Win11_25H2_Russian_x64.iso
-output/
-packer_cache/
-output-*/
-.smoke-test/
-.tools/
-.generated/
+# Локальный установочный образ Windows
+/Win11_25H2_Russian_x64.iso
+
+# Артефакты и кеш Packer
+/output/
+/output-*/
+/packer_cache/
 *.box
+
+# Временная среда smoke-теста
+/.smoke-test/
