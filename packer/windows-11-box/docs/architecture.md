@@ -7,10 +7,10 @@ GNU Make — опциональная оболочка команд.
 
 ## Поток
 
-Packer answer CD → unattended install → WinRM → VirtualBox Guest Additions →
+Answer ISO → unattended install → WinRM → VirtualBox Guest Additions → reboot →
 prepare Sysprep → verify → Sysprep → `.box` → smoke-test.
 
-Sysprep выполняется последним гостевым шагом и завершает работу VM. Готовый box
+Sysprep запускается последним через задачу `SYSTEM`, независимо от WinRM, и завершает работу VM. Готовый box
 проверяется только через новую Vagrant VM.
 
 ## Ответственность
@@ -20,7 +20,7 @@ Sysprep выполняется последним гостевым шагом и
 | `Makefile` | Единая точка запуска без логики сборки. |
 | `docs/` | ТЗ, архитектура, рабочий процесс, соглашения и источники решений. |
 | `image/` | HCL, answer-файлы, гостевые скрипты и конфигурация box. |
-| `tools/` | Host-side запуск сборки. |
+| `tools/` | Host-side запуск сборки и создание answer ISO. |
 | `tests/` | Быстрые проверки проекта и smoke-тест готового box. |
 | `iso/` | Локальные установочные образы, не исходный код. |
 | `build/`, `output/` | Генерируемые файлы, не исходный код. |

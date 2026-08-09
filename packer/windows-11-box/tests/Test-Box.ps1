@@ -39,6 +39,12 @@ if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVer
 if ((Get-WinSystemLocale).Name -ne "ru-RU") { throw "Unexpected system locale" }
 if ((Get-Service WinRM).StartType -ne "Automatic") { throw "WinRM is not automatic" }
 if ((Get-Service VBoxService).Status -ne "Running") { throw "VBoxService is not running" }
+$network = Get-NetIPConfiguration |
+  Where-Object { $_.NetAdapter.Status -eq "Up" -and $_.IPv4DefaultGateway } |
+  Select-Object -First 1
+if (-not $network) { throw "Network adapter has no IPv4 default gateway" }
+$connectTest = Invoke-WebRequest -Uri "http://www.msftconnecttest.com/connecttest.txt" -TimeoutSec 30 -UseBasicParsing
+if ($connectTest.Content.Trim() -ne "Microsoft Connect Test") { throw "Internet connectivity check failed" }
 $tpm = Get-CimInstance -Namespace "root\cimv2\Security\MicrosoftTpm" -ClassName Win32_Tpm
 if (-not $tpm -or $tpm.SpecVersion -notmatch "2\.0") { throw "TPM 2.0 is unavailable" }
 '@

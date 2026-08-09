@@ -33,14 +33,8 @@ source "virtualbox-iso" "windows11" {
   hard_drive_interface = "sata"
   sata_port_count      = 4
   guest_additions_mode = "attach"
-  cd_files = [
-    "image/answer-files/Autounattend.xml",
-    "image/answer-files/SysprepUnattend.xml",
-    "image/scripts/enable-winrm.ps1"
-  ]
-  cd_label         = "answer"
-  shutdown_timeout = "30m"
-  output_directory = "build/virtualbox"
+  shutdown_timeout     = "30m"
+  output_directory     = "build/virtualbox"
 
   boot_wait = "5s"
   boot_command = [
@@ -48,10 +42,11 @@ source "virtualbox-iso" "windows11" {
   ]
 
   vboxmanage = [
-    ["modifyvm", "{{.Name}}", "--tpm-type", "2.0"]
+    ["modifyvm", "{{.Name}}", "--tpm-type", "2.0"],
+    ["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "2", "--device", "0", "--type", "dvddrive", "--medium", "build/answer-files.iso"]
   ]
 
-  shutdown_command = "C:/Windows/System32/Sysprep/Sysprep.exe /generalize /oobe /shutdown /unattend:C:/Windows/Panther/SysprepUnattend.xml"
+  shutdown_command = "powershell.exe -NoProfile -Command \"Start-ScheduledTask -TaskName PackerSysprep\""
 }
 
 build {
@@ -63,8 +58,15 @@ build {
   }
 
   provisioner "powershell" {
+    scripts = ["image/scripts/install-guest-additions.ps1"]
+  }
+
+  provisioner "windows-restart" {
+    restart_timeout = "15m"
+  }
+
+  provisioner "powershell" {
     scripts = [
-      "image/scripts/install-guest-additions.ps1",
       "image/scripts/prepare-sysprep.ps1",
       "image/scripts/verify.ps1"
     ]

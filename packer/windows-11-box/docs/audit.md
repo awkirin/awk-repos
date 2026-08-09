@@ -4,12 +4,14 @@
 
 | Дефект | Исправление |
 | --- | --- |
-| Самописное создание answer ISO ломалось между Windows PowerShell 5.1 и PowerShell 7 | Скрипт удалён; answer CD создаёт Packer через `cd_files`. |
-| WinRM-команда в XML была длинной и дублировала `enable-winrm.ps1` | `FirstLogonCommands` содержит только поиск и запуск скрипта с answer CD. |
+| Создание answer ISO ломалось между Windows PowerShell 5.1 и PowerShell 7 | Удалён несовместимый `Marshal.QueryInterface`; ISO проверен в обеих версиях PowerShell. |
+| WinRM-команда в XML была длинной и дублировала `enable-winrm.ps1` | `FirstLogonCommands` содержит только поиск и запуск скрипта с answer ISO; генератор кладёт скрипт в корень ISO. |
 | Guest Additions не находились по метке тома | Установщик ищется по файлу `VBoxWindowsAdditions.exe` на подключённых файловых дисках. |
 | `VBoxService.exe` проверялся в неверном каталоге | Provisioner и verify используют фактический путь `%WINDIR%\System32\VBoxService.exe`. |
+| Sysprep запускался до перезагрузки после установки Guest Additions | Добавлен `windows-restart`; verify требует запущенную `VBoxService`. |
+| Прямой запуск Sysprep зависел от WinRM, который исчезал при очистке сети | Sysprep регистрируется как задача `SYSTEM`; WinRM только запускает задачу. |
 | VM получила все 8 физических ядер хоста и отставала по виртуальному времени | Сборке выделены 4 vCPU и 16 ГБ RAM. |
-| Архитектурный поток не содержал подготовку Sysprep | В поток добавлены answer CD и prepare Sysprep. |
+| Архитектурный поток не содержал подготовку Sysprep | В поток добавлены answer ISO и prepare Sysprep. |
 | `verify.ps1` не проверял локаль и Sysprep answer file | Добавлены проверки `ru-RU` и `SysprepUnattend.xml`. |
 | `Test-Path` нарушал соглашение проекта | Для известного пути используется `-LiteralPath`. |
 
@@ -26,5 +28,6 @@
 
 ## Проверка
 
+- `New-AnswerIso.ps1` выполнен в Windows PowerShell 5.1 и PowerShell 7.
 - `Test-Project.ps1` выполнен в Windows PowerShell 5.1.
 - Полная сборка и smoke-тест требуются после изменения гостевой проверки.

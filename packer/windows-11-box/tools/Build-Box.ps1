@@ -18,6 +18,7 @@ if ((Test-Path -LiteralPath $outputPath) -and -not $Force) { throw "Output alrea
 Get-Command packer -ErrorAction Stop | Out-Null
 New-Item -ItemType Directory -Path $diagnosticsDirectory -Force | Out-Null
 Write-Host "Build log: $logPath"
+& (Join-Path $PSScriptRoot "New-AnswerIso.ps1")
 
 Push-Location $projectRoot
 try {

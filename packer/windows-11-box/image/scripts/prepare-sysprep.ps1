@@ -11,3 +11,13 @@ $sysprepSource = Get-PSDrive -PSProvider FileSystem |
 if (-not $sysprepSource) { throw "SysprepUnattend.xml media was not found" }
 
 Copy-Item -LiteralPath $sysprepSource -Destination "C:\Windows\Panther\SysprepUnattend.xml" -Force
+
+$sysprepAction = New-ScheduledTaskAction `
+  -Execute "C:\Windows\System32\Sysprep\Sysprep.exe" `
+  -Argument "/generalize /oobe /shutdown /unattend:C:\Windows\Panther\SysprepUnattend.xml"
+Register-ScheduledTask `
+  -TaskName "PackerSysprep" `
+  -Action $sysprepAction `
+  -User "SYSTEM" `
+  -RunLevel Highest `
+  -Force | Out-Null
