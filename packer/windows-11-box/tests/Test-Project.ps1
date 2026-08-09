@@ -27,12 +27,12 @@ foreach ($file in $powerShellFiles) {
   Assert-Condition ($parseErrors.Count -eq 0) "PowerShell syntax failed: $($file.FullName)"
 }
 
-foreach ($file in Get-ChildItem -LiteralPath (Join-Path $projectRoot "answer-files") -Filter "*.xml") {
+foreach ($file in Get-ChildItem -LiteralPath (Join-Path $projectRoot "image\answer-files") -Filter "*.xml") {
   [void][xml](Get-Content -LiteralPath $file.FullName -Raw)
 }
 
-$hcl = Get-Content -LiteralPath (Join-Path $projectRoot "windows11.pkr.hcl") -Raw
-$vagrantfile = Get-Content -LiteralPath (Join-Path $projectRoot "vagrant\Vagrantfile.template") -Raw
+$hcl = Get-Content -LiteralPath (Join-Path $projectRoot "image\windows11.pkr.hcl") -Raw
+$vagrantfile = Get-Content -LiteralPath (Join-Path $projectRoot "image\vagrant\Vagrantfile.template") -Raw
 $buildScript = Get-Content -LiteralPath (Join-Path $projectRoot "tools\Build-Box.ps1") -Raw
 $smokeTest = Get-Content -LiteralPath (Join-Path $projectRoot "tests\Test-Box.ps1") -Raw
 $goal = Get-Content -LiteralPath (Join-Path $projectRoot "docs\goal.md") -Raw
@@ -45,9 +45,9 @@ foreach ($contract in @($buildScript, $smokeTest, $goal)) {
 }
 
 Assert-Condition ($vagrantfile -match 'config\.vm\.communicator\s*=\s*"winrm"') "Vagrant communicator must be winrm"
-$guestAdditionsIndex = $hcl.IndexOf('"scripts/install-guest-additions.ps1"')
-$sysprepIndex = $hcl.IndexOf('"scripts/prepare-sysprep.ps1"')
-$verifyIndex = $hcl.IndexOf('"scripts/verify.ps1"')
+$guestAdditionsIndex = $hcl.IndexOf('"image/scripts/install-guest-additions.ps1"')
+$sysprepIndex = $hcl.IndexOf('"image/scripts/prepare-sysprep.ps1"')
+$verifyIndex = $hcl.IndexOf('"image/scripts/verify.ps1"')
 Assert-Condition (
   $guestAdditionsIndex -ge 0 -and $guestAdditionsIndex -lt $sysprepIndex -and $sysprepIndex -lt $verifyIndex
 ) "Guest provisioners are missing or out of order"
@@ -58,9 +58,9 @@ Assert-Condition (
 Get-Command packer -ErrorAction Stop | Out-Null
 Push-Location $projectRoot
 try {
-  & packer fmt -check .
+  & packer fmt -check image
   if ($LASTEXITCODE -ne 0) { throw "packer fmt failed" }
-  & packer validate -syntax-only .
+  & packer validate -syntax-only image
   if ($LASTEXITCODE -ne 0) { throw "packer syntax validation failed" }
 } finally {
   Pop-Location

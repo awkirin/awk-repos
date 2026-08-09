@@ -5,6 +5,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path $PSScriptRoot -Parent
+$templateDirectory = Join-Path $projectRoot "image"
 $outputPath = Join-Path $projectRoot "output\windows11-25h2-pro-ru-virtualbox.box"
 $packerCacheDirectory = Join-Path $projectRoot "build\packer-cache"
 $hadPackerCacheDirectory = Test-Path -LiteralPath "Env:PACKER_CACHE_DIR"
@@ -18,13 +19,13 @@ Get-Command packer -ErrorAction Stop | Out-Null
 Push-Location $projectRoot
 try {
   $env:PACKER_CACHE_DIR = $packerCacheDirectory
-  & packer init .
+  & packer init $templateDirectory
   if ($LASTEXITCODE -ne 0) { throw "packer init failed" }
 
   if ($Force) {
-    & packer build -force .
+    & packer build -force $templateDirectory
   } else {
-    & packer build .
+    & packer build $templateDirectory
   }
   if ($LASTEXITCODE -ne 0) { throw "packer build failed" }
 } finally {

@@ -53,20 +53,20 @@ build {
   sources = ["source.virtualbox-iso.windows11"]
 
   provisioner "file" {
-    source      = "scripts/enable-winrm.ps1"
+    source      = "image/scripts/enable-winrm.ps1"
     destination = "C:/Windows/Temp/enable-winrm.ps1"
   }
 
   provisioner "powershell" {
     scripts = [
-      "scripts/install-guest-additions.ps1",
-      "scripts/prepare-sysprep.ps1",
-      "scripts/verify.ps1"
+      "image/scripts/install-guest-additions.ps1",
+      "image/scripts/prepare-sysprep.ps1",
+      "image/scripts/verify.ps1"
     ]
   }
 
   post-processor "vagrant" {
     output               = "output/windows11-25h2-pro-ru-virtualbox.box"
-    vagrantfile_template = "vagrant/Vagrantfile.template"
+    vagrantfile_template = "image/vagrant/Vagrantfile.template"
   }
 }
