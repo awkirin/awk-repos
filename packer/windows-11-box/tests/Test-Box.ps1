@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "$boxName"
   config.vm.boot_timeout = 1200
   config.vm.provider "virtualbox" do |virtualbox|
-    virtualbox.gui = false
+    virtualbox.gui = true
     virtualbox.cpus = 2
     virtualbox.memory = 8192
   end

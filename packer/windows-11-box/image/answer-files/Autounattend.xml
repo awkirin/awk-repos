@@ -79,7 +79,7 @@
         <Password><Value>vagrant</Value><PlainText>true</PlainText></Password>
       </AutoLogon>
       <FirstLogonCommands>
-        <SynchronousCommand wcm:action="add"><Order>1</Order><Description>Enable WinRM</Description><CommandLine>powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Set-LocalUser -Name vagrant -PasswordNeverExpires $true; Set-NetConnectionProfile -NetworkCategory Private -ErrorAction SilentlyContinue; winrm quickconfig -quiet; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true; Set-Item WSMan:\localhost\Service\Auth\Basic -Value true; Enable-PSRemoting -SkipNetworkProfileCheck -Force"</CommandLine></SynchronousCommand>
+        <SynchronousCommand wcm:action="add"><Order>1</Order><Description>Enable WinRM</Description><CommandLine>powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-PSDrive -PSProvider FileSystem | ForEach-Object { $path = Join-Path $_.Root 'enable-winrm.ps1'; if (Test-Path -LiteralPath $path) { &amp; $path; break } }"</CommandLine></SynchronousCommand>
       </FirstLogonCommands>
     </component>
   </settings>

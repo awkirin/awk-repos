@@ -4,11 +4,12 @@
 
 | Дефект | Исправление |
 | --- | --- |
-| `New-AnswerIso.ps1` не компилировался одинаково в Windows PowerShell 5.1 и PowerShell 7 | Устранён вызов `Marshal.QueryInterface` с несовместимыми между версиями модификаторами; добавлен регрессионный тест. |
-| WinRM-команда в `specialize` превышала лимит `Path` в 259 символов и останавливала Windows Setup | Bootstrap перенесён в `FirstLogonCommands`, где лимит составляет 1024 символа; лимит и включение WinRM защищены тестом. |
+| Самописное создание answer ISO ломалось между Windows PowerShell 5.1 и PowerShell 7 | Скрипт удалён; answer CD создаёт Packer через `cd_files`. |
+| WinRM-команда в XML была длинной и дублировала `enable-winrm.ps1` | `FirstLogonCommands` содержит только поиск и запуск скрипта с answer CD. |
 | Guest Additions не находились по метке тома | Установщик ищется по файлу `VBoxWindowsAdditions.exe` на подключённых файловых дисках. |
-| Launcher Guest Additions завершался раньше установки | Provisioner ожидает появления `VBoxService.exe` не более пяти минут. |
-| Архитектурный поток не содержал подготовку Sysprep | В поток добавлены Answer ISO и prepare Sysprep. |
+| `VBoxService.exe` проверялся в неверном каталоге | Provisioner и verify используют фактический путь `%WINDIR%\System32\VBoxService.exe`. |
+| VM получила все 8 физических ядер хоста и отставала по виртуальному времени | Сборке выделены 4 vCPU и 16 ГБ RAM. |
+| Архитектурный поток не содержал подготовку Sysprep | В поток добавлены answer CD и prepare Sysprep. |
 | `verify.ps1` не проверял локаль и Sysprep answer file | Добавлены проверки `ru-RU` и `SysprepUnattend.xml`. |
 | `Test-Path` нарушал соглашение проекта | Для известного пути используется `-LiteralPath`. |
 
@@ -25,6 +26,5 @@
 
 ## Проверка
 
-- `New-AnswerIso.ps1` выполнен в Windows PowerShell 5.1.
 - `Test-Project.ps1` выполнен в Windows PowerShell 5.1.
 - Полная сборка и smoke-тест требуются после изменения гостевой проверки.

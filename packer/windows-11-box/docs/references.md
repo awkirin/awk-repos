@@ -45,8 +45,9 @@ HCL-проект.
 ### rgl/windows-vagrant
 
 - [Репозиторий](https://github.com/rgl/windows-vagrant)
+- [Windows 11 Autounattend.xml](https://github.com/rgl/windows-vagrant/blob/master/windows-11-24h2-uefi/autounattend.xml)
 
 Сильный современный пример HCL, UEFI, unattended setup, Sysprep и проверки
 готового Windows 11 box. Текущая реализация не поддерживает VirtualBox, поэтому
 она пригодна только как архитектурный ориентир для жизненного цикла образа и
-тестирования.
+тестирования. Из неё используется короткий запуск bootstrap-скрипта с answer CD.

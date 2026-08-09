@@ -24,7 +24,7 @@ source "virtualbox-iso" "windows11" {
   winrm_password = "vagrant"
   winrm_timeout  = "45m"
 
-  cpus      = 8
+  cpus      = 4
   memory    = 16384
   disk_size = 81920
 
@@ -33,8 +33,14 @@ source "virtualbox-iso" "windows11" {
   hard_drive_interface = "sata"
   sata_port_count      = 4
   guest_additions_mode = "attach"
-  shutdown_timeout     = "30m"
-  output_directory     = "build/virtualbox"
+  cd_files = [
+    "image/answer-files/Autounattend.xml",
+    "image/answer-files/SysprepUnattend.xml",
+    "image/scripts/enable-winrm.ps1"
+  ]
+  cd_label         = "answer"
+  shutdown_timeout = "30m"
+  output_directory = "build/virtualbox"
 
   boot_wait = "5s"
   boot_command = [
@@ -42,8 +48,7 @@ source "virtualbox-iso" "windows11" {
   ]
 
   vboxmanage = [
-    ["modifyvm", "{{.Name}}", "--tpm-type", "2.0"],
-    ["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "2", "--device", "0", "--type", "dvddrive", "--medium", "build/answer-files.iso"]
+    ["modifyvm", "{{.Name}}", "--tpm-type", "2.0"]
   ]
 
   shutdown_command = "C:/Windows/System32/Sysprep/Sysprep.exe /generalize /oobe /shutdown /unattend:C:/Windows/Panther/SysprepUnattend.xml"

@@ -40,17 +40,17 @@ $firstLogonCommand = $autounattend.SelectSingleNode(
 )
 Assert-Condition ($null -ne $firstLogonCommand) "First logon command is missing"
 Assert-Condition ($firstLogonCommand.InnerText.Length -le 1024) "First logon command exceeds the Windows Setup limit"
-Assert-Condition ($firstLogonCommand.InnerText -match 'Enable-PSRemoting') "First logon command must enable WinRM"
+Assert-Condition ($firstLogonCommand.InnerText -match 'enable-winrm\.ps1') "First logon command must run the WinRM bootstrap script"
 
 $hcl = Get-Content -LiteralPath (Join-Path $projectRoot "image\windows11.pkr.hcl") -Raw
 $vagrantfile = Get-Content -LiteralPath (Join-Path $projectRoot "image\vagrant\Vagrantfile.template") -Raw
 $buildScript = Get-Content -LiteralPath (Join-Path $projectRoot "tools\Build-Box.ps1") -Raw
-$answerIsoScript = Get-Content -LiteralPath (Join-Path $projectRoot "tools\New-AnswerIso.ps1") -Raw
 $smokeTest = Get-Content -LiteralPath (Join-Path $projectRoot "tests\Test-Box.ps1") -Raw
 $goal = Get-Content -LiteralPath (Join-Path $projectRoot "docs\goal.md") -Raw
 
 Assert-Condition ($hcl -match 'iso_checksum\s*=\s*"sha256:[0-9a-fA-F]{64}"') "HCL must pin the ISO with SHA-256"
-Assert-Condition ($answerIsoScript -notmatch 'Marshal\.QueryInterface') "Answer ISO generator must be cross-version compatible"
+Assert-Condition ($hcl -match 'cd_files\s*=') "Packer must create the answer CD"
+Assert-Condition ($hcl -match 'image/scripts/enable-winrm\.ps1') "Answer CD must contain the WinRM bootstrap script"
 Assert-Condition ($hcl -match 'output\s*=\s*"([^"]+\.box)"') "HCL Vagrant output is missing"
 $boxPath = $Matches[1]
 foreach ($contract in @($buildScript, $smokeTest, $goal)) {
