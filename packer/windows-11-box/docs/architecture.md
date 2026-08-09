@@ -7,8 +7,8 @@ GNU Make — опциональная оболочка команд.
 
 ## Поток
 
-Unattended install → WinRM → VirtualBox Guest Additions → verify → Sysprep →
-`.box` → smoke-test.
+Answer ISO → unattended install → WinRM → VirtualBox Guest Additions →
+prepare Sysprep → verify → Sysprep → `.box` → smoke-test.
 
 Sysprep выполняется последним гостевым шагом и завершает работу VM. Готовый box
 проверяется только через новую Vagrant VM.

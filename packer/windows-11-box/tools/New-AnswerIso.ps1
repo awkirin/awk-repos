@@ -18,13 +18,9 @@ public static class ImapiStreamWriter
     public static void Write(object source, string outputPath, int blockSize, int totalBlocks)
     {
         IntPtr unknown = Marshal.GetIUnknownForObject(source);
-        IntPtr streamPointer = IntPtr.Zero;
         try
         {
-            Guid streamId = new Guid("0000000c-0000-0000-C000-000000000046");
-            int result = Marshal.QueryInterface(unknown, in streamId, out streamPointer);
-            if (result != 0) Marshal.ThrowExceptionForHR(result);
-            IStream stream = (IStream)Marshal.GetTypedObjectForIUnknown(streamPointer, typeof(IStream));
+            IStream stream = (IStream)Marshal.GetTypedObjectForIUnknown(unknown, typeof(IStream));
             byte[] buffer = new byte[blockSize];
             using (FileStream file = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
             {
@@ -37,7 +33,6 @@ public static class ImapiStreamWriter
         }
         finally
         {
-            if (streamPointer != IntPtr.Zero) Marshal.Release(streamPointer);
             Marshal.Release(unknown);
         }
     }

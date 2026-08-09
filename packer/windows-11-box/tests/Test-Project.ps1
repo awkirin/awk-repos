@@ -34,10 +34,12 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $projectRoot "image\answ
 $hcl = Get-Content -LiteralPath (Join-Path $projectRoot "image\windows11.pkr.hcl") -Raw
 $vagrantfile = Get-Content -LiteralPath (Join-Path $projectRoot "image\vagrant\Vagrantfile.template") -Raw
 $buildScript = Get-Content -LiteralPath (Join-Path $projectRoot "tools\Build-Box.ps1") -Raw
+$answerIsoScript = Get-Content -LiteralPath (Join-Path $projectRoot "tools\New-AnswerIso.ps1") -Raw
 $smokeTest = Get-Content -LiteralPath (Join-Path $projectRoot "tests\Test-Box.ps1") -Raw
 $goal = Get-Content -LiteralPath (Join-Path $projectRoot "docs\goal.md") -Raw
 
 Assert-Condition ($hcl -match 'iso_checksum\s*=\s*"sha256:[0-9a-fA-F]{64}"') "HCL must pin the ISO with SHA-256"
+Assert-Condition ($answerIsoScript -notmatch 'Marshal\.QueryInterface') "Answer ISO generator must be cross-version compatible"
 Assert-Condition ($hcl -match 'output\s*=\s*"([^"]+\.box)"') "HCL Vagrant output is missing"
 $boxPath = $Matches[1]
 foreach ($contract in @($buildScript, $smokeTest, $goal)) {
