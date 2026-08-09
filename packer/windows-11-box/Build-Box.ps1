@@ -6,6 +6,9 @@ param(
 $ErrorActionPreference = "Stop"
 $buildRoot = $PSScriptRoot
 $outputPath = Join-Path $buildRoot "output\windows11-25h2-pro-ru-virtualbox.box"
+$packerCacheDirectory = Join-Path $buildRoot "build\packer-cache"
+$hadPackerCacheDirectory = Test-Path -LiteralPath "Env:PACKER_CACHE_DIR"
+$previousPackerCacheDirectory = $env:PACKER_CACHE_DIR
 
 if ((Test-Path -LiteralPath $outputPath) -and -not $Force) { throw "Output already exists. Use -Force to rebuild." }
 
@@ -14,6 +17,7 @@ Get-Command packer -ErrorAction Stop | Out-Null
 
 Push-Location $buildRoot
 try {
+  $env:PACKER_CACHE_DIR = $packerCacheDirectory
   & packer init .
   if ($LASTEXITCODE -ne 0) { throw "packer init failed" }
 
@@ -24,6 +28,11 @@ try {
   }
   if ($LASTEXITCODE -ne 0) { throw "packer build failed" }
 } finally {
+  if ($hadPackerCacheDirectory) {
+    $env:PACKER_CACHE_DIR = $previousPackerCacheDirectory
+  } else {
+    Remove-Item -LiteralPath "Env:PACKER_CACHE_DIR" -ErrorAction SilentlyContinue
+  }
   Pop-Location
 }
 

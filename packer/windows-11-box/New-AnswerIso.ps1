@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 $source = Join-Path $PSScriptRoot "answer-files"
-$outputDirectory = Join-Path $PSScriptRoot ".generated"
+$outputDirectory = Join-Path $PSScriptRoot "build"
 $output = Join-Path $outputDirectory "answer-files.iso"
 New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
 

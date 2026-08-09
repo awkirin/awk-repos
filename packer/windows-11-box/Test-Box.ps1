@@ -1,12 +1,12 @@
 $ErrorActionPreference = "Stop"
 
 $boxPath = Join-Path $PSScriptRoot "output\windows11-25h2-pro-ru-virtualbox.box"
-$testRoot = Join-Path $PSScriptRoot ".smoke-test"
+$testRoot = Join-Path $PSScriptRoot "build\smoke-test"
 $boxName = "windows-11-25h2-pro-ru-smoke-test"
 if (-not (Test-Path -LiteralPath $boxPath)) { throw "Box not found: $boxPath" }
 if (Test-Path -LiteralPath $testRoot) { throw "Smoke-test directory already exists: $testRoot" }
 
-New-Item -ItemType Directory -Path $testRoot | Out-Null
+New-Item -ItemType Directory -Path $testRoot -Force | Out-Null
 try {
   & vagrant box add --force --name $boxName $boxPath
   if ($LASTEXITCODE -ne 0) { throw "vagrant box add failed" }

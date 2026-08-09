@@ -2,11 +2,12 @@
 /Win11_25H2_Russian_x64.iso
 
 # Артефакты и кеш Packer
+/build/
 /output/
-/output-*/
-/packer_cache/
-/.generated/
 *.box
 
-# Временная среда smoke-теста
+# Результаты сборок со старой структурой
+/.generated/
+/output-*/
+/packer_cache/
 /.smoke-test/

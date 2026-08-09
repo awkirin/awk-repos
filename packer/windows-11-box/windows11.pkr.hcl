@@ -34,7 +34,7 @@ source "virtualbox-iso" "windows11" {
   sata_port_count      = 4
   guest_additions_mode = "attach"
   shutdown_timeout     = "30m"
-  output_directory     = "output-virtualbox"
+  output_directory     = "build/virtualbox"
 
   boot_wait = "5s"
   boot_command = [
@@ -43,7 +43,7 @@ source "virtualbox-iso" "windows11" {
 
   vboxmanage = [
     ["modifyvm", "{{.Name}}", "--tpm-type", "2.0"],
-    ["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "2", "--device", "0", "--type", "dvddrive", "--medium", ".generated/answer-files.iso"]
+    ["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "2", "--device", "0", "--type", "dvddrive", "--medium", "build/answer-files.iso"]
   ]
 
   shutdown_command = "C:/Windows/System32/Sysprep/Sysprep.exe /generalize /oobe /shutdown /unattend:C:/Windows/Panther/SysprepUnattend.xml"
